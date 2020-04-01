@@ -1,69 +1,69 @@
 <h1>Eat-Da-Burger!</h1>
 
+<img src="/img/burger.png" alt="burger logo">
 
-<ul>
-  {{#each burgers}}
-    {{#unless devoured}}
-    <li>
-        {{burger_name}}
-        <button class="change-devoured" data-id="{{this.id}}">Devoure It!</button>
-
-
-        <script>
-            $(".change-devoured").on("click", function(event) {
-                var id = $(this).data("id");
-                var userDevoured = {
-                    devoured: 1
-                };
-
-                //send the PUT request
-                $.ajax("/api/burgers/" + id,{
-                    type: "PUT",
-                    data: userDevoured
-                }).then(
-                    function(){
-                        console.log(`changed sleep to`);
-                        location.reload();
-                    }
-                )
-            })
-        </script>
-
-        {{!-- <form action="/api/burgers/{{this.id}}" method="PUT">
-            <button class="change-devoured" data-id="{{this.id}}" value="1">
-            Devoure It!
-            </button>
-        </form> --}}
-
-       
-    </li>
-      {{!-- {{> cats/cat-block devoure=true}} --}}
-    {{/unless}}
-  {{/each}}
-</ul>
-
-<ul>
-    {{#each burgers}}
-        {{#if devoured}}
-            <li>
+<div class="row">
+    <div class="col-6">
+        <div class="new-burgers">
+        {{#each burgers}}
+            {{#unless devoured}}
+            <p>
                 {{burger_name}}
-            </li>
-        {{/if}}
-    {{/each}}
-</ul>
+                <button class="change-devoured" data-id="{{this.id}}">Devoure It!</button>
 
 
+                <script>
+                    $(".change-devoured").on("click", function(event) {
+                        var id = $(this).data("id");
+                        var userDevoured = {
+                            devoured: 1
+                        };
 
+                        //send the PUT request
+                        $.ajax("/api/burgers/" + id,{
+                            type: "PUT",
+                            data: userDevoured
+                        }).then(
+                            function(){
+                                console.log(`changed sleep to`);
+                                location.reload();
+                            }
+                        )
+                    })
+                </script>
 
+                {{!-- <form action="/api/burgers/{{this.id}}" method="PUT">
+                    <button class="change-devoured" data-id="{{this.id}}" value="1">
+                    Devoure It!
+                    </button>
+                </form> --}}
 
+            
+            </p>
+            {{!-- {{> cats/cat-block devoure=true}} --}}
+            {{/unless}}
+        {{/each}}
+        </div>
+    </div>
+    
+    <div class="col-6">
+        <div class="old-burgers">
+            {{#each burgers}}
+                {{#if devoured}}
+                    <p>
+                        {{burger_name}}
+                    </p>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div>
 
-
-<p>Enter a burger you want to eat, Click the submit button</p>
 
 
 <form class="create-form">
     <div>
-        <input type="text" id="burger-name" name="name" value="0">
+        <input type="text" id="burger-name" name="name">
     </div>
         
     <button type="submit">Submit</button>
@@ -91,3 +91,5 @@
     </script>
 
 </form>
+
+<p>Enter a burger you want to eat, Click the submit button</p>
