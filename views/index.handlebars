@@ -1,0 +1,93 @@
+<h1>Eat-Da-Burger!</h1>
+
+
+<ul>
+  {{#each burgers}}
+    {{#unless devoured}}
+    <li>
+        {{burger_name}}
+        <button class="change-devoured" data-id="{{this.id}}">Devoure It!</button>
+
+
+        <script>
+            $(".change-devoured").on("click", function(event) {
+                var id = $(this).data("id");
+                var userDevoured = {
+                    devoured: 1
+                };
+
+                //send the PUT request
+                $.ajax("/api/burgers/" + id,{
+                    type: "PUT",
+                    data: userDevoured
+                }).then(
+                    function(){
+                        console.log(`changed sleep to`);
+                        location.reload();
+                    }
+                )
+            })
+        </script>
+
+        {{!-- <form action="/api/burgers/{{this.id}}" method="PUT">
+            <button class="change-devoured" data-id="{{this.id}}" value="1">
+            Devoure It!
+            </button>
+        </form> --}}
+
+       
+    </li>
+      {{!-- {{> cats/cat-block devoure=true}} --}}
+    {{/unless}}
+  {{/each}}
+</ul>
+
+<ul>
+    {{#each burgers}}
+        {{#if devoured}}
+            <li>
+                {{burger_name}}
+            </li>
+        {{/if}}
+    {{/each}}
+</ul>
+
+
+
+
+
+
+
+<p>Enter a burger you want to eat, Click the submit button</p>
+
+
+<form class="create-form">
+    <div>
+        <input type="text" id="burger-name" name="name" value="0">
+    </div>
+        
+    <button type="submit">Submit</button>
+    
+    <script>
+        $(".create-form").on("submit", function(event){
+            event.preventDefault();
+
+            var newBurger = {
+                burger_name: $("#burger-name").val().trim(),
+                devoured: "0"
+            };
+
+            // send POST request
+            $.ajax("/api/burgers", {
+                type: "POST",
+                data: newBurger
+            }).then(
+                function() {
+                    console.log(`created new burger`);
+                    location.reload();
+                }
+            )
+        })
+    </script>
+
+</form>

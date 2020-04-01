@@ -18,6 +18,7 @@ router.get("/", function (req, res) {
 router.post("/api/burgers", function (req, res) {
 
     console.log(`the post is working`);
+    console.log(`this is req.body: ${req.body}`);
 
     burger.insertOne([
         "burger_name", "devoured"
@@ -27,7 +28,6 @@ router.post("/api/burgers", function (req, res) {
         // Send back the ID of the new quote
         res.json({ id: result.insertId });
 
-        console.log(`this is the response: ${res.json}`);
     });
 });
 
@@ -36,6 +36,7 @@ router.put("/api/burgers/:id", function (req, res) {
 
     console.log("condition", condition);
 
+    console.log(req.body);
     burger.updateOne({
         devoured: req.body.devoured
     }, condition, function (result) {
